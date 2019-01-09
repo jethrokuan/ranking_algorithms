@@ -1,0 +1,13 @@
+* Ranking Algorithms
+
+The ranking algorithms considered here address the issue of learning
+to rank, via pairwise preferences (binary comparisons).
+
+** Implemented Algorithms
+- [ ] SVM
+- [ ] Spectral MLE cite:chen15_spect_mle
+- [ ] Balanced Rank Estimation (BRE) cite:wauthier2013efficient
+- [ ] Unbalanced Rank Estimation (URE) cite:wauthier2013efficient
+- [X] SpringRank cite:DeBaccoeaar8260
+
+bibliography:ranking.bib

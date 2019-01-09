@@ -1,0 +1,77 @@
+@article {DeBaccoeaar8260,
+	author = {De Bacco, Caterina and Larremore, Daniel B. and Moore, Cristopher},
+	title = {A physical model for efficient ranking in networks},
+	volume = {4},
+	number = {7},
+	elocation-id = {eaar8260},
+	year = {2018},
+	doi = {10.1126/sciadv.aar8260},
+	publisher = {American Association for the Advancement of Science},
+	abstract = {We present a physically inspired model and an efficient algorithm to infer hierarchical rankings of nodes in directed networks. It assigns real-valued ranks to nodes rather than simply ordinal ranks, and it formalizes the assumption that interactions are more likely to occur between individuals with similar ranks. It provides a natural statistical significance test for the inferred hierarchy, and it can be used to perform inference tasks such as predicting the existence or direction of edges. The ranking is obtained by solving a linear system of equations, which is sparse if the network is; thus, the resulting algorithm is extremely efficient and scalable. We illustrate these findings by analyzing real and synthetic data, including data sets from animal behavior, faculty hiring, social support networks, and sports tournaments. We show that our method often outperforms a variety of others, in both speed and accuracy, in recovering the underlying ranks and predicting edge directions.},
+	URL = {http://advances.sciencemag.org/content/4/7/eaar8260},
+	eprint = {http://advances.sciencemag.org/content/4/7/eaar8260.full.pdf},
+	journal = {Science Advances}
+}
+
+@incollection{NIPS2011_4427,
+title = {Active Ranking using Pairwise Comparisons},
+author = {Jamieson, Kevin G and Nowak, Robert},
+booktitle = {Advances in Neural Information Processing Systems 24},
+editor = {J. Shawe-Taylor and R. S. Zemel and P. L. Bartlett and F. Pereira and K. Q. Weinberger},
+pages = {2240--2248},
+year = {2011},
+publisher = {Curran Associates, Inc.},
+url = {http://papers.nips.cc/paper/4427-active-ranking-using-pairwise-comparisons.pdf}
+}
+
+@inproceedings{wauthier2013efficient,
+  title={Efficient ranking from pairwise comparisons},
+  author={Wauthier, Fabian and Jordan, Michael and Jojic, Nebojsa},
+  booktitle={International Conference on Machine Learning},
+  pages={109--117},
+  year={2013}
+}
+
+@article{chen15_spect_mle,
+  author =       {Chen, Yuxin and Suh, Changho},
+  title =        {Spectral Mle: Top-$K$ Rank Aggregation From Pairwise
+                  Comparisons},
+  journal =      {CoRR},
+  year =         2015,
+  url =          {http://arxiv.org/abs/1504.07218v2},
+  abstract =     {This paper explores the preference-based top-$K$
+                  rank aggregation problem. Suppose that a collection
+                  of items is repeatedly compared in pairs, and one
+                  wishes to recover a consistent ordering that
+                  emphasizes the top-$K$ ranked items, based on
+                  partially revealed preferences. We focus on the
+                  Bradley-Terry-Luce (BTL) model that postulates a set
+                  of latent preference scores underlying all items,
+                  where the odds of paired comparisons depend only on
+                  the relative scores of the items involved. We
+                  characterize the minimax limits on identifiability
+                  of top-$K$ ranked items, in the presence of random
+                  and non-adaptive sampling. Our results highlight a
+                  separation measure that quantifies the gap of
+                  preference scores between the $K^{\text{th}}$ and
+                  $(K+1)^{\text{th}}$ ranked items. The minimum sample
+                  complexity required for reliable top-$K$ ranking
+                  scales inversely with the separation measure
+                  irrespective of other preference distribution
+                  metrics. To approach this minimax limit, we propose
+                  a nearly linear-time ranking scheme, called
+                  \emph{Spectral MLE}, that returns the indices of the
+                  top-$K$ items in accordance to a careful score
+                  estimate. In a nutshell, Spectral MLE starts with an
+                  initial score estimate with minimal squared loss
+                  (obtained via a spectral method), and then
+                  successively refines each component with the
+                  assistance of coordinate-wise MLEs. Encouragingly,
+                  Spectral MLE allows perfect top-$K$ item
+                  identification under minimal sample complexity. The
+                  practical applicability of Spectral MLE is further
+                  corroborated by numerical experiments.},
+  archivePrefix ={arXiv},
+  eprint =       {1504.07218},
+  primaryClass = {cs.LG},
+}
