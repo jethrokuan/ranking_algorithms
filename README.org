@@ -5,8 +5,8 @@ to rank, via pairwise preferences (binary comparisons).
 
 ** Implemented Algorithms
 - [ ] SVM
-- [ ] Luce Spectral Ranking cite:bradley52_rank_analy_incom_block_desig
-- [ ] Spectral MLE cite:chen15_spect_mle
+- [X] Luce Spectral Ranking cite:bradley52_rank_analy_incom_block_desig
+- [X] Rank Centrality cite:bradley52_rank_analy_incom_block_desig
 - [ ] Balanced Rank Estimation (BRE) cite:wauthier2013efficient
 - [ ] Unbalanced Rank Estimation (URE) cite:wauthier2013efficient
 - [X] SpringRank cite:DeBaccoeaar8260
