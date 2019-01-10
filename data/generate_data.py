@@ -20,10 +20,14 @@ import argparse
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate syntactic data.")
 
-    parser.add_argument("--nodes", type=int, help="Maximum number of nodes", required=True)
+    parser.add_argument(
+        "--nodes", type=int, help="Maximum number of nodes", required=True)
 
     parser.add_argument(
-        "--comparisons", type=int, help="Number of data-points to generate.", required=True)
+        "--comparisons",
+        type=int,
+        help="Number of data-points to generate.",
+        required=True)
 
     parser.add_argument(
         "--noise", type=float, default=0., help="Degree of noise in data.")
@@ -33,18 +37,18 @@ if __name__ == "__main__":
     dir_path = os.path.dirname(os.path.realpath(__file__))
     dir_path = os.path.join(dir_path, "syntactic")
     file_path = os.path.join(
-        dir_path, "syntactic_{}_{}_{}.csv".format(args.nodes, args.comparisons, args.noise))
+        dir_path, "syntactic_{}_{}_{}.csv".format(args.nodes, args.comparisons,
+                                                  args.noise))
 
     with open(file_path, "w+") as fp:
         for i in range(args.comparisons):
             node_1 = np.random.random_integers(args.nodes)
-            node_2 = np.random.choice(np.setdiff1d(range(1, args.nodes + 1), node_1))
-            result = int(node_1 < node_2)
-            if random.uniform(0, 1) < args.noise:
-                result = 1 - result
+            node_2 = np.random.choice(
+                np.setdiff1d(range(1, args.nodes + 1), node_1))
+            if node_1 < node_2:  # ensure that node_1 is bigger
+                node_1, node_2 = node_2, node_1
+            if random.uniform(0,
+                              1) < args.noise:  # swap under noisy conditions
+                node_1, node_2 = node_2, node_1
 
-            fp.write("{},{},{}\n".format(
-                node_1,
-                node_2,
-                result
-            ))
+            fp.write("{},{}\n".format(node_1, node_2))

@@ -24,9 +24,9 @@ def parse_file(file_path):
 
     with open(file_path, "r") as f:
         csv_reader = csv.reader(f, delimiter=",")
-        for node_a, node_b, _ in csv_reader:
-            nodes.add(node_a)
-            nodes.add(node_b)
+        for winner, loser in csv_reader:
+            nodes.add(winner)
+            nodes.add(loser)
 
     idx2node = list(nodes)
     node2idx = {idx2node[i]: i for i in range(len(idx2node))}
@@ -36,13 +36,10 @@ def parse_file(file_path):
 
     with open(file_path, "r") as f:
         csv_reader = csv.reader(f, delimiter=",")
-        for node_a, node_b, result in csv_reader:
-            a_idx = node2idx[node_a]
-            b_idx = node2idx[node_b]
-            if result == "0":  # a > b
-                A[a_idx, b_idx] += 1
-            else:
-                A[b_idx, a_idx] += 1
+        for winner, loser in csv_reader:
+            winner_idx = node2idx[winner]
+            loser_idx = node2idx[loser]
+            A[winner_idx, loser_idx] += 1
 
     return idx2node, A
 
@@ -93,8 +90,10 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     idx2node, adj_matrix = parse_file(args.file)
+
+    print("Total Nodes: ", len(idx2node))
+
     res = spring_rank(adj_matrix, idx2node)
 
-    print("Total nodes: {}".format(len(res)))
     for key, value in sorted(res.items(), key=lambda d: d[1], reverse=True):
         print("{}: {}".format(key, value))
