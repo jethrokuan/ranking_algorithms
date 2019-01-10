@@ -1,7 +1,8 @@
 """Utilities for various"""
 
-import numpy as np
 import warnings
+
+import numpy as np
 from scipy import linalg
 
 
@@ -38,7 +39,7 @@ def statdist(generator):
         # The LU decomposition raises a warning when the generator matrix is
         # singular (which it, by construction, is!).
         warnings.filterwarnings("ignore")
-        lu, piv = linalg.lu_factor(generator.T, check_finite=False)
+        lu, _ = linalg.lu_factor(generator.T, check_finite=False)
     # The last row contains 0's only.
     left = lu[:-1, :-1]
     right = -lu[:-1, -1]

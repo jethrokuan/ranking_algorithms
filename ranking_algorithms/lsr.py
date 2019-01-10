@@ -1,16 +1,15 @@
-"""Luce Spectral Ranking.
+"""Luce Spectral Ranking."""
 
-
-"""
-
-import pickle
-import csv
-import os
 import argparse
+import csv
 import functools
+import os
+import pickle
+
 import numpy as np
-from ranking_algorithms.utils import exp_transform, log_transform, statdist
+
 from ranking_algorithms.convergence_tests import NormOfDifferenceTest
+from ranking_algorithms.utils import exp_transform, log_transform, statdist
 
 
 def _init_lsr(n_items, alpha, initial_params=None):
@@ -139,9 +138,9 @@ def rank_centrality(n_items, data, alpha=0.0):
     return log_transform(statdist(chain))
 
 
-def get_data(data_path):
+def get_data(file_path):
     data = list()
-    with open(data_path, "r") as f:
+    with open(file_path, "r") as f:
         csv_reader = csv.reader(f, delimiter=",")
         for winner, loser in csv_reader:
             winner = int(winner)
@@ -153,22 +152,21 @@ def get_data(data_path):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--file",
-                        help="path to data.",
-                        required=True)
+    parser.add_argument("--file", help="path to data.", required=True)
 
     args = parser.parse_args()
     idx2node_path = os.path.join(args.file, "idx2node.pkl")
 
-    with open(idx2node_path, "rb") as f:
-        idx2node = pickle.load(f)
+    with open(idx2node_path, "rb") as fp:
+        idx2node = pickle.load(fp)
 
     data_path = os.path.join(args.file, "data.csv")
 
-    data = get_data(data_path)
+    input_data = get_data(data_path)
 
-    # scores = ilsr_pairwise(len(idx2node), data, alpha=0.2)
-    scores = rank_centrality(len(idx2node), data, alpha=0.2)
+    scores = ilsr_pairwise(len(idx2node), input_data, alpha=0.2)
+    scores = rank_centrality(len(idx2node), input_data, alpha=0.2)
+
     node2score = {idx2node[i]: scores[i] for i in range(len(scores))}
 
     for key, value in sorted(

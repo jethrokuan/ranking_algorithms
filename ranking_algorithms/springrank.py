@@ -9,35 +9,31 @@ Usage:
   python ranking_algorithms/springrank.py --path data/blueprint-rookie-data/
 """
 
-from scipy.sparse import csr_matrix
-from scipy.sparse import linalg
-import numpy as np
-
-import csv
 import argparse
-
+import csv
 import os
 import pickle
 
+import numpy as np
+from scipy.sparse import csr_matrix, linalg
 
-def get_adj_matrix(file_path, num_nodes):
+
+def get_adj_matrix(file_path, node_count):
     """Parses a data-set."""
 
-    N = len(idx2node)
-
-    A = np.zeros([N, N])
+    adj = np.zeros([node_count, node_count])
 
     with open(file_path, "r") as f:
         csv_reader = csv.reader(f, delimiter=",")
         for winner, loser in csv_reader:
             winner = int(winner)
             loser = int(loser)
-            A[winner, loser] += 1
+            adj_matrix[winner, loser] += 1
 
-    return A
+    return adj
 
 
-def spring_rank(adj_matrix, alpha=0., reg_rl=1.0, int_rl=1.0):
+def spring_rank(adj, alpha=0., reg_rl=1.0, int_rl=1.0):
     """Computes the SpringRank model.
 
     SpringRank is computed via solving a set of linear equations,
@@ -45,30 +41,30 @@ def spring_rank(adj_matrix, alpha=0., reg_rl=1.0, int_rl=1.0):
     the various nodes, and the ranking solution is the configuration
     where the total energy is lowest.
 
-    :param adj_matrix: weighted network adjacency matrix
+    :param adj: weighted network adjacency matrix
     :param alpha: controls the impact of the regularization term
     :param reg_rl: regularization spring's rest length
     :param int_rl: interaction spring's rest length
     :returns:
     :rtype: N-dimensional array, indices representing the node's indices
-      in ordering adj_matrix
+      in ordering adj
 
     """
-    N = adj_matrix.shape[0]
-    k_in = np.sum(adj_matrix, 0)
-    k_out = np.sum(adj_matrix, 1)
+    n = adj.shape[0]
+    k_in = np.sum(adj, 0)
+    k_out = np.sum(adj, 1)
 
-    D1 = np.zeros_like(adj_matrix)
-    D2 = np.zeros_like(adj_matrix)
+    d1 = np.zeros_like(adj)
+    d2 = np.zeros_like(adj)
 
-    for i in range(N):
-        D1[i, i] = k_out[i] + k_in[i]
-        D2[i, i] = int_rl * (k_out[i] - k_in[i])
+    for i in range(n):
+        d1[i, i] = k_out[i] + k_in[i]
+        d2[i, i] = int_rl * (k_out[i] - k_in[i])
 
-    B = np.ones(N) * alpha * reg_rl + np.dot(D2, np.ones(N))
-    A = alpha * np.eye(N) + D1 - (adj_matrix + adj_matrix.T)
-    A = csr_matrix(A)
-    rank = linalg.bicgstab(A, B)[0]
+    b = np.ones(n) * alpha * reg_rl + np.dot(d2, np.ones(n))
+    a = alpha * np.eye(N) + d1 - (adj + adj.T)
+    a = csr_matrix(a)
+    rank = linalg.bicgstab(a, b)[0]
 
     return rank
 
@@ -82,8 +78,8 @@ if __name__ == "__main__":
 
     idx2node_path = os.path.join(args.file, "idx2node.pkl")
 
-    with open(idx2node_path, "rb") as f:
-        idx2node = pickle.load(f)
+    with open(idx2node_path, "rb") as fp:
+        idx2node = pickle.load(fp)
 
     data_path = os.path.join(args.file, "data.csv")
 

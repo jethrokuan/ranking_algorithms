@@ -7,8 +7,9 @@ import abc
 import numpy as np
 
 
-class ConvergenceTest(metaclass=abc.ABCMeta):
+# pylint: disable=too-few-public-methods
 
+class ConvergenceTest(metaclass=abc.ABCMeta):
     """Abstract base class for convergence tests.
 
     Convergence tests should implement a single function, `__call__`, which
@@ -26,7 +27,6 @@ class ConvergenceTest(metaclass=abc.ABCMeta):
 
 
 class NormOfDifferenceTest(ConvergenceTest):
-
     """Convergence test based on the norm of the difference vector.
 
     This convergence test computes the difference between two successive
@@ -52,7 +52,6 @@ class NormOfDifferenceTest(ConvergenceTest):
 
 
 class ScalarFunctionTest(ConvergenceTest):
-
     """Convergence test based on a scalar function of the parameters.
 
     This convergence test computes the values of a scalar function of the
