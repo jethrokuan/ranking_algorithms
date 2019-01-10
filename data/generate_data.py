@@ -16,6 +16,9 @@ import numpy as np
 import random
 
 import argparse
+import pickle
+
+from data.data_utils import mkdirs
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate syntactic data.")
@@ -36,15 +39,22 @@ if __name__ == "__main__":
 
     dir_path = os.path.dirname(os.path.realpath(__file__))
     dir_path = os.path.join(dir_path, "syntactic")
-    file_path = os.path.join(
-        dir_path, "syntactic_{}_{}_{}.csv".format(args.nodes, args.comparisons,
-                                                  args.noise))
+    dir_path = os.path.join(
+        dir_path, "{}_{}_{}".format(args.nodes, args.comparisons, args.noise))
+    mkdirs(dir_path)
+    idx_path = os.path.join(dir_path, "idx2node.pkl")
+    file_path = os.path.join(dir_path, "data.csv")
+
+    idx2node = {i: str(i) for i in range(args.nodes)}
+
+    with open(idx_path, "wb") as f:
+        pickle.dump(idx2node, f)
 
     with open(file_path, "w+") as fp:
         for i in range(args.comparisons):
-            node_1 = np.random.random_integers(args.nodes)
+            node_1 = np.random.random_integers(0, args.nodes - 1)
             node_2 = np.random.choice(
-                np.setdiff1d(range(1, args.nodes + 1), node_1))
+                np.setdiff1d(range(args.nodes), node_1))
             if node_1 < node_2:  # ensure that node_1 is bigger
                 node_1, node_2 = node_2, node_1
             if random.uniform(0,
