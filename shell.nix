@@ -6,6 +6,7 @@ with import <nixpkgs> { };
     scipy
 
     #Utilities
+    pyment
     pylint
     yapf
     python-language-server

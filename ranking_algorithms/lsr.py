@@ -15,11 +15,13 @@ from ranking_algorithms.utils import exp_transform, log_transform, statdist
 def _init_lsr(n_items, alpha, initial_params=None):
     """Initializes the LSR markov chain and the weights.
 
-    :param n_items: Number of items
-    :param alpha:
-    :param initial_params:
-    :returns:
-    :rtype:
+    Args:
+      n_items: Number of items
+      alpha: param initial_params:
+      initial_params:  (Default value = None)
+
+    Returns:
+      rtype:
 
     """
     if initial_params is None:
@@ -33,12 +35,17 @@ def _init_lsr(n_items, alpha, initial_params=None):
 def _ilsr(fun, params, max_iter, tol):
     """Iteratively refines LSR estimates until convergence.
 
-    :param fun:
-    :param params:
-    :param max_iter:
-    :param tol:
-    :returns:
-    :rtype:
+    Args:
+      fun:
+      params:
+      max_iter:
+      tol:
+
+    Returns:
+
+
+    Raises:
+      RuntimeError: When ILSR does not converge after
 
     """
     converged = NormOfDifferenceTest(tol, order=1)
@@ -53,12 +60,14 @@ def _ilsr(fun, params, max_iter, tol):
 def lsr_pairwise(n_items, data, alpha=0., initial_params=None):
     """Computes the LSR estimate of model parameters.
 
-    :param n_items:
-    :param data:
-    :param alpha:
-    :param initial_params:
-    :returns:
-    :rtype:
+    Args:
+      n_items: number of nodes
+      data (list of lists): list of pairwise comparison data
+      initial_params: Initial paramateers for LSR (Default value = None)
+      alpha: Regularization weight  (Default value = 0.)
+
+    Returns:
+      parameters for LSR
 
     """
     weights, chain = _init_lsr(n_items, alpha, initial_params)
@@ -81,25 +90,18 @@ def ilsr_pairwise(n_items,
     The transition rates of the LSR Markov chain are initialized with
     ``alpha``. When ``alpha > 0``, this corresponds to a form of regularization
     (see :ref:`regularization` for details).
-    Parameters
-    ----------
-    n_items : int
-        Number of distinct items.
-    data : list of lists
-        Pairwise-comparison data.
-    alpha : float, optional
-        Regularization parameter.
-    initial_params : array_like, optional
-        Parameters used to initialize the iterative procedure.
-    max_iter : int, optional
-        Maximum number of iterations allowed.
-    tol : float, optional
-        Maximum L1-norm of the difference between successive iterates to
-        declare convergence.
-    Returns
-    -------
-    params : numpy.ndarray
-        The ML estimate of model parameters.
+
+    Args:
+      n_items(int): Number of distinct items.
+      data(list of lists): Pairwise-comparison data.
+      alpha(float, optional, optional): Regularization parameter. (Default value = 0.0)
+      initial_params(array_like, optional, optional): Parameters used to initialize the iterative procedure. (Default value = None)
+      max_iter(int, optional, optional): Maximum number of iterations allowed. (Default value = 100)
+      tol(float, optional, optional): Maximum L1-norm of the difference between successive iterates to (Default value = 1e-8)
+
+    Returns:
+
+
     """
     fun = functools.partial(
         lsr_pairwise, n_items=n_items, data=data, alpha=alpha)
@@ -114,18 +116,15 @@ def rank_centrality(n_items, data, alpha=0.0):
     The transition rates of the Rank Centrality Markov chain are initialized
     with ``alpha``. When ``alpha > 0``, this corresponds to a form of
     regularization (see :ref:`regularization` for details).
-    Parameters
-    ----------
-    n_items : int
-        Number of distinct items.
-    data : list of lists
-        Pairwise-comparison data.
-    alpha : float, optional
-        Regularization parameter.
-    Returns
-    -------
-    params : numpy.ndarray
-        An estimate of model parameters.
+
+    Args:
+      n_items(int): Number of distinct items.
+      data(list of lists): Pairwise-comparison data.
+      alpha(float, optional, optional):  (Default value = 0.0)
+
+    Returns:
+
+
     """
     _, chain = _init_lsr(n_items, alpha)
     for winner, loser in data:
@@ -139,6 +138,14 @@ def rank_centrality(n_items, data, alpha=0.0):
 
 
 def get_data(file_path):
+    """
+
+    Args:
+      file_path:
+
+    Returns:
+
+    """
     data = list()
     with open(file_path, "r") as f:
         csv_reader = csv.reader(f, delimiter=",")

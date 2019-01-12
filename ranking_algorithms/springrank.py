@@ -19,8 +19,6 @@ from scipy.sparse import csr_matrix, linalg
 
 
 def get_adj_matrix(file_path, node_count):
-    """Parses a data-set."""
-
     adj = np.zeros([node_count, node_count])
 
     with open(file_path, "r") as f:
@@ -41,13 +39,14 @@ def spring_rank(adj, alpha=0., reg_rl=1.0, int_rl=1.0):
     the various nodes, and the ranking solution is the configuration
     where the total energy is lowest.
 
-    :param adj: weighted network adjacency matrix
-    :param alpha: controls the impact of the regularization term
-    :param reg_rl: regularization spring's rest length
-    :param int_rl: interaction spring's rest length
-    :returns:
-    :rtype: N-dimensional array, indices representing the node's indices
-      in ordering adj
+    Args:
+      adj: weighted network adjacency matrix
+      alpha: controls the impact of the regularization term (Default value = 0.)
+      reg_rl: regularization spring's rest length (Default value = 1.0)
+      int_rl: interaction spring's rest length (Default value = 1.0)
+
+    Returns:
+      n-d arr: array with indices representing the node's indices
 
     """
     n = adj.shape[0]
